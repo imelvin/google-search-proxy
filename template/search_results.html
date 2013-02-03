@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+
+      <form action="/search" method="get" class="form-search">
+      	<input name="search_text" class="input-large" value="{{ searchstr }}" />
+        <input type="submit" value="搜索" class="btn-large" />
+        <input type="hidden" name="page" value="1" />
+        <input type="hidden" name="rsz" value="8" />
+      </form>
+
+    </div>
+    
+    <div class="container">
+    	<h5>当前第{{ page }}页</h5>
+        <form action="/search" method="get" class="form-search">
+      	<input type="hidden" name="search_text" value="{{ searchstr }}" />
+        <input type="submit" value="下一页" class="btn-mini" />
+        <input type="hidden" name="page" value="{{ nextpage }}" />
+        <input type="hidden" name="rsz" value="8" />
+      </form>
+    <div>
+    
+  {% for r in results %}  
+    <div class="container">
+    	<div>
+    		<h3><a href="{{ r['url'] }}" target="_blank">{{ r['titleNoFormatting'] }}</a></h3>
+        </div>
+        <div>
+        	<b>{{ r['url'] }}</b>
+        </div>
+        <div>{{ r['content'] }}</div>
+    
+    </div>
+  {% end %}
+
+  </body>
+</html>
